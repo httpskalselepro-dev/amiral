@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thumbnail Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0d10;
+      --surface: #14161c;
+      --surface-2: #1c1f28;
+      --border: #252932;
+      --accent: #e63f2e;
+      --accent-yellow: #f5c518;
+      --accent-blue: #3b8beb;
+      --text: #e8eaf0;
+      --text-muted: #7a8099;
+      --text-dim: #454b5e;
+      --radius: 10px;
+      --font: 'Space Grotesk', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; line-height: 1.6; }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 32px;
+      display: flex; align-items: center; gap: 14px;
+      position: sticky; top: 0;
+      background: rgba(12,13,16,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+    .logo-badge { width: 36px; height: 36px; background: var(--accent); border-radius: 8px; display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
+    header h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+    header p { font-size: 13px; color: var(--text-muted); margin-top: 1px; }
+
+    .app { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; display: grid; gap: 20px; }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .card-header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+    .step-num { width: 22px; height: 22px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 5px; display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--text-muted); flex-shrink: 0; }
+    .card-header h2 { font-size: 14px; font-weight: 600; }
+    .card-body { padding: 20px; }
+
+    label { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin-bottom: 6px; }
+    input[type="text"], textarea {
+      width: 100%; background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px; color: var(--text);
+      font-family: var(--font); font-size: 14px; outline: none;
+      transition: border-color 0.15s; resize: vertical;
+    }
+    input[type="text"]:focus, textarea:focus { border-color: var(--accent-blue); }
+    .hint { font-size: 12px; color: var(--text-dim); margin-top: 5px; }
+    .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* Upload zones */
+    .upload-zone {
+      border: 2px dashed var(--border); border-radius: 8px; padding: 20px 16px;
+      text-align: center; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s; position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent-blue); background: rgba(59,139,235,0.04); }
+    .upload-zone.has-file { border-style: solid; border-color: #2a5c3a; background: rgba(42,92,58,0.08); }
+    .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .upload-icon { font-size: 22px; margin-bottom: 5px; }
+    .upload-zone p { font-size: 13px; color: var(--text-muted); }
+    .upload-zone .file-name { font-size: 11px; font-family: var(--mono); color: #4ade80; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .preview-img { width: 100%; height: 80px; object-fit: cover; border-radius: 6px; margin-top: 8px; display: none; }
+
+    /* Big generate button */
+    .btn-main {
+      width: 100%; padding: 16px;
+      background: var(--accent); color: #fff; border: none; border-radius: 8px;
+      font-family: var(--font); font-size: 16px; font-weight: 700; letter-spacing: -0.2px;
+      cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-main:hover:not(:disabled) { opacity: 0.88; }
+    .btn-main:active:not(:disabled) { transform: scale(0.99); }
+    .btn-main:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* Status / loading */
+    .status-bar {
+      display: none; align-items: center; gap: 12px;
+      background: rgba(59,139,235,0.08); border: 1px solid rgba(59,139,235,0.2);
+      border-radius: 8px; padding: 12px 16px; margin-top: 14px;
+      font-size: 13px; color: var(--accent-blue);
+    }
+    .status-bar.visible { display: flex; }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(59,139,235,0.3); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Generated fields */
+    .gen-fields { display: none; margin-top: 20px; }
+    .gen-fields.visible { display: block; }
+
+    .gen-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+    @media (max-width: 600px) { .gen-grid { grid-template-columns: 1fr; } }
+
+    .gen-chip {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 12px;
+    }
+    .gen-chip .chip-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .gen-chip .chip-label.red { color: #f97a6e; }
+    .gen-chip .chip-label.white { color: var(--text-muted); }
+    .gen-chip .chip-label.yellow { color: var(--accent-yellow); }
+    .gen-chip .chip-value { font-size: 14px; font-weight: 700; color: var(--text); }
+
+    .concept-box {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px; font-size: 13px; color: var(--text-muted);
+      line-height: 1.6; margin-bottom: 14px;
+    }
+    .concept-box strong { color: var(--text); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+
+    /* Prompt output */
+    .output-wrap { position: relative; }
+    .output-box {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+      padding: 14px 16px; font-family: var(--mono); font-size: 12px; line-height: 1.75;
+      color: var(--text); white-space: pre-wrap; word-break: break-word; min-height: 180px;
+    }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text-muted); font-family: var(--font); font-size: 11px;
+      padding: 4px 10px; cursor: pointer; transition: color 0.15s;
+    }
+    .copy-btn:hover { color: var(--text); }
+
+    /* Arena bar */
+    .arena-bar {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(59,139,235,0.06); border: 1px solid rgba(59,139,235,0.2);
+      border-radius: 8px; padding: 11px 16px; margin-top: 14px;
+    }
+    .arena-bar span { font-size: 13px; color: var(--text-muted); flex: 1; }
+    .arena-bar a {
+      background: var(--accent-blue); color: #fff; text-decoration: none;
+      padding: 7px 14px; border-radius: 6px; font-size: 13px; font-weight: 600;
+      white-space: nowrap; transition: opacity 0.15s;
+    }
+    .arena-bar a:hover { opacity: 0.85; }
+
+    /* Checklist */
+    .checklist { list-style: none; display: grid; gap: 8px; }
+    .checklist li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-muted); }
+    .checklist li input[type="checkbox"] { accent-color: var(--accent); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
+    .checklist li.checked { text-decoration: line-through; opacity: 0.4; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #1e2430; border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px 18px; font-size: 13px; color: #4ade80;
+      transform: translateY(8px); opacity: 0;
+      transition: opacity 0.2s, transform 0.2s; pointer-events: none; z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    .divider { height: 1px; background: var(--border); margin: 16px 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-badge">🎬</div>
+  <div>
+    <h1>Thumbnail Assistant</h1>
+    <p>Donne juste le titre de ta vidéo — l'IA génère tout le reste</p>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- STEP 1: Inputs -->
+  <div class="card">
+    <div class="card-header">
+      <span class="step-num">1</span>
+      <h2>Titre de ta vidéo + images de référence</h2>
+    </div>
+    <div class="card-body">
+
+      <div class="field">
+        <label>Titre ou sujet de la vidéo</label>
+        <input type="text" id="videoTitle" placeholder="Ex: Les 7 signes du diabète que vos pieds révèlent" />
+        <p class="hint">L'IA va générer le headline, le concept visuel et le prompt complet automatiquement.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid-2">
+        <div>
+          <label>Ta photo (visage référence)</label>
+          <div class="upload-zone" id="faceZone">
+            <input type="file" id="faceInput" accept="image/*" />
+            <div class="upload-icon">👤</div>
+            <p>Clique ou dépose ta photo<br/><span style="color:var(--text-dim);font-size:11px">PNG/JPG · min 512×512</span></p>
+            <div class="file-name" id="faceName"></div>
+          </div>
+          <img class="preview-img" id="facePreview" />
+        </div>
+        <div>
+          <label>Thumbnail concurrent (optionnel)</label>
+          <div class="upload-zone" id="compZone">
+            <input type="file" id="compInput" accept="image/*" />
+            <div class="upload-icon">🎯</div>
+            <p>Thumbnail YouTube à imiter<br/><span style="color:var(--text-dim);font-size:11px">Pour le style de mise en page</span></p>
+            <div class="file-name" id="compName"></div>
+          </div>
+          <img class="preview-img" id="compPreview" />
+        </div>
+      </div>
+      <p class="hint" style="margin-top:10px">💡 URL thumbnail YouTube : <code style="background:var(--surface-2);padding:2px 6px;border-radius:4px;font-size:11px">https://i.ytimg.com/vi/VIDEO_ID/maxresdefault.jpg</code></p>
+    </div>
+  </div>
+
+  <!-- STEP 2: Generate -->
+  <div class="card">
+    <div class="card-header">
+      <span class="step-num">2</span>
+      <h2>Génération automatique</h2>
+    </div>
+    <div class="card-body">
+      <button class="btn-main" id="genBtn" onclick="generateAll()">
+        ⚡ Générer le prompt automatiquement
+      </button>
+
+      <div class="status-bar" id="statusBar">
+        <div class="spinner"></div>
+        <span id="statusText">L'IA analyse ton titre et prépare le prompt…</span>
+      </div>
+
+      <!-- Generated headline preview -->
+      <div class="gen-fields" id="genFields">
+        <div class="gen-grid">
+          <div class="gen-chip">
+            <div class="chip-label red">🔴 Bannière rouge</div>
+            <div class="chip-value" id="outTop">—</div>
+          </div>
+          <div class="gen-chip">
+            <div class="chip-label white">⬜ Texte blanc</div>
+            <div class="chip-value" id="outWhite">—</div>
+          </div>
+          <div class="gen-chip">
+            <div class="chip-label yellow">🟡 Texte jaune</div>
+            <div class="chip-value" id="outYellow">—</div>
+          </div>
+        </div>
+
+        <div class="concept-box">
+          <strong>🖼 Objet principal (concept visuel)</strong>
+          <span id="outConcept">—</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <label>Prompt complet prêt à coller sur arena.ai</label>
+        <div class="output-wrap">
+          <div class="output-box" id="outputBox"></div>
+          <button class="copy-btn" onclick="copyPrompt()">Copier</button>
+        </div>
+
+        <div class="arena-bar">
+          <span>Colle le prompt + attache tes images → Nano Banana Pro</span>
+          <a href="https://arena.ai/image/direct" target="_blank">Ouvrir arena.ai →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Checklist -->
+  <div class="card">
+    <div class="card-header">
+      <span class="step-num">3</span>
+      <h2>Checklist avant publication</h2>
+    </div>
+    <div class="card-body">
+      <ul class="checklist">
+        <li><input type="checkbox" onchange="toggleCheck(this)" /> Visage correspond à ta photo de référence</li>
+        <li><input type="checkbox" onchange="toggleCheck(this)" /> Headline bien orthographié (Nano Banana fait des fautes)</li>
+        <li><input type="checkbox" onchange="toggleCheck(this)" /> Visage sur le tiers droit, pas au centre</li>
+        <li><input type="checkbox" onchange="toggleCheck(this)" /> Objet principal clairement visible au centre</li>
+        <li><input type="checkbox" onchange="toggleCheck(this)" /> Flèche rouge et triangle jaune présents</li>
+        <li><input type="checkbox" onchange="toggleCheck(this)" /> Texte lisible à 320×180px (réduire l'image pour tester)</li>
+        <li><input type="checkbox" onchange="toggleCheck(this)" /> Aucun watermark, logo ou visage parasite</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">✅ Copié !</div>
+
+<script>
+  // ── Upload handling ──
+  function setupUpload(inputId, zoneId, nameId, previewId) {
+    const input = document.getElementById(inputId);
+    const zone  = document.getElementById(zoneId);
+    const name  = document.getElementById(nameId);
+    const prev  = document.getElementById(previewId);
+    function handle(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      name.textContent = file.name;
+      zone.classList.add('has-file');
+      prev.src = URL.createObjectURL(file);
+      prev.style.display = 'block';
+    }
+    input.addEventListener('change', () => handle(input.files[0]));
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); handle(e.dataTransfer.files[0]); });
+  }
+  setupUpload('faceInput','faceZone','faceName','facePreview');
+  setupUpload('compInput','compZone','compName','compPreview');
+
+  // ── Main generation ──
+  async function generateAll() {
+    const title = document.getElementById('videoTitle').value.trim();
+    if (!title) { alert('Entre d\'abord le titre de ta vidéo !'); return; }
+
+    const btn = document.getElementById('genBtn');
+    const statusBar = document.getElementById('statusBar');
+    const statusText = document.getElementById('statusText');
+    const genFields = document.getElementById('genFields');
+
+    btn.disabled = true;
+    statusBar.classList.add('visible');
+    genFields.classList.remove('visible');
+    statusText.textContent = 'L\'IA analyse ton titre et génère le headline…';
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1000,
+          messages: [{
+            role: 'user',
+            content: `Tu es un expert en thumbnails YouTube haute performance. Pour la vidéo suivante, génère les éléments d'un thumbnail clickbait style médical/santé.
+
+Titre de la vidéo: "${title}"
+
+Réponds UNIQUEMENT en JSON valide, sans aucun texte avant ou après, avec exactement ces clés:
+{
+  "banner_red": "texte court pour la bannière rouge en haut (2-4 mots, MAJUSCULES, accrocheuse)",
+  "headline_white": "texte principal en blanc (2-4 mots, MAJUSCULES)",
+  "headline_yellow": "mots clés en jaune (2-4 mots, MAJUSCULES)",
+  "concept": "description en 1-2 phrases de l'objet visuel principal à mettre au centre du thumbnail. Doit être photorealistic, identifiable à 320px de large, une seule chose concrète.",
+  "person": "the man ou the woman selon le contexte le plus probable"
+}`
+          }]
+        })
+      });
+
+      const data = await response.json();
+      const text = data.content.map(i => i.text || '').join('');
+      
+      let parsed;
+      try {
+        const clean = text.replace(/```json|```/g, '').trim();
+        parsed = JSON.parse(clean);
+      } catch(e) {
+        throw new Error('Réponse IA invalide, réessaie.');
+      }
+
+      statusText.textContent = 'Construction du prompt final…';
+
+      const { banner_red, headline_white, headline_yellow, concept, person } = parsed;
+
+      // Fill chips
+      document.getElementById('outTop').textContent = banner_red;
+      document.getElementById('outWhite').textContent = headline_white;
+      document.getElementById('outYellow').textContent = headline_yellow;
+      document.getElementById('outConcept').textContent = concept;
+
+      // Build full prompt
+      const prompt = `YouTube thumbnail, 16:9, 1920x1080, HIGH CONTRAST CLICK-BAIT STYLE.
+
+Background: smooth vertical blue gradient (light sky blue at top, slightly darker saturated blue at bottom). Clean, no noise.
+
+RIGHT SIDE: photorealistic portrait of ${person} in the attached face reference — match his/her face, hair, outfit, and warm confident expression EXACTLY. 3/4 angle, clean cutout with subtle drop shadow. Do not invent a different person.
+
+LEFT SIDE: huge bold sans-serif text. Primary words in white, KEY WORDS in bright yellow. Heavy black outline (~6px), soft drop shadow. ALL CAPS, extreme weight (900).
+- Top-left in a RED BANNER: "${banner_red}"
+- Main headline stacked underneath: "${headline_white}" (white) then "${headline_yellow}" (bright yellow)
+
+CENTER: ${concept}.
+
+Accents: red curved arrow pointing at the main object, small yellow warning triangle in the upper area, highlight circles. High saturation, tight negative space.
+
+Must read clearly at 320x180 on a phone.
+
+NO watermarks, NO logos, NO brand names, NO faces other than the attached reference. Use the layout and style of the second reference image (blue gradient, bold text left, face right, red arrows, yellow warning triangle) but DO NOT copy its text — use the new headline above, and replace its center concept with the one described.`;
+
+      document.getElementById('outputBox').textContent = prompt;
+
+      statusBar.classList.remove('visible');
+      genFields.classList.add('visible');
+
+    } catch (err) {
+      statusBar.classList.remove('visible');
+      alert('Erreur : ' + err.message);
+    }
+
+    btn.disabled = false;
+  }
+
+  // ── Copy ──
+  function copyPrompt() {
+    const text = document.getElementById('outputBox').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    });
+  }
+
+  // ── Checklist ──
+  function toggleCheck(cb) {
+    cb.parentElement.classList.toggle('checked', cb.checked);
+  }
+</script>
+</body>
+</html>
