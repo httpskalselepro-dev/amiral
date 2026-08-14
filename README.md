@@ -1,61 +1,58 @@
-# 🛍️ AURORA Concept Store - Site E-commerce Moderne
+# 🛍️ AURORA Store - E-Commerce & Espace Propriétaire
 
-Site e-commerce interactif, responsive et ultra-performant dédié au design minimaliste, à la tech et à la maison.
-
-![Aperçu AURORA](https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80)
+Plateforme e-commerce moderne, ultra-rapide et entièrement personnalisable avec **vitrine client** et **espace propriétaire de gestion (Admin Dashboard)** synchronisés en direct.
 
 ---
 
-## ✨ Fonctionnalités Clés
+## 🚀 Accès Rapide
 
-- 🔍 **Catalogue Interactif & Recherche en direct** : Recherche instantanée par mots-clés, nom, description et catégories.
-- 🏷️ **Filtres Multi-critères** : Par catégorie, tranche de budget (curseur de prix), disponibilité en stock et promotions.
-- 🔄 **Tri Intelligent** : Recommandés, prix croissant/décroissant, avis clients, nouveautés et bestsellers.
-- 👁️ **Aperçu Rapide (Quick View)** : Galerie de miniatures, choix de variantes de couleurs, notation, détails techniques et stocks.
-- 🛒 **Panier d'Achat Coulissant (Drawer)** : Jauge de livraison offerte (seuil à 60€), moteur de codes promos (`BIENVENUE10`, `FLASH20`, `AURORA15`), calcul automatique du sous-total, remises et frais de port.
-- 💳 **Tunnel de Commande Complet (Checkout)** : Formulaire de livraison, simulation de paiement sécurisé par carte bancaire avec formatage automatique et confirmation avec reçu imprimable.
-- ❤️ **Liste de Favoris (Wishlist)** : Sauvegarde locale de vos coups de cœur avec transfert direct vers le panier.
-- 🌓 **Mode Sombre / Mode Clair (Dark/Light Mode)** : Bascule instantanée avec mémorisation des préférences utilisateur.
-- 📱 **100% Responsive** : Expérience fluide et soignée sur mobile, tablette et grand écran.
+- **Boutique Client :** Double-cliquez sur `index.html` (ou sur `ouvrir_le_site.bat`).
+- **Espace Propriétaire (Admin) :** Ouvrez `admin.html`.
+  - **Mot de passe Propriétaire :** `bounapenda`
 
 ---
 
-## 🚀 Utilisation Rapide
+## ✨ Fonctionnalités Incluses
 
-Ouvrez simplement le fichier `index.html` dans n'importe quel navigateur web moderne (Chrome, Edge, Firefox, Safari) ou double-cliquez sur `ouvrir_le_site.bat`.
+### 1. 🛍️ Boutique Publique (`index.html`)
+- Catalogue dynamique avec recherche instantanée par mots-clés.
+- Filtres multi-critères (catégories, budget max, en stock, promos).
+- Modale Quick View avec spécifications techniques et sélecteur de variantes.
+- Panier d'achat coulissant (drawer) avec jauge de livraison offerte et codes promos.
+- Tunnel de commande complet (Checkout) avec validation et reçu imprimable.
+- Mode sombre / clair et liste de favoris (Wishlist).
 
-Aucune installation ni serveur Node/Python requis.
+### 2. 🛡️ Espace Propriétaire & Direction (`admin.html`)
+- **Tableau de Bord :** Chiffre d'affaires en direct, commandes reçues, panier moyen, alertes de stock.
+- **Gestion des Produits :** Ajouter un article, modifier les prix et stocks en direct, éditer les fiches techniques, supprimer.
+- **Gestion des Commandes :** Suivi des commandes clients, changement de statut (*En préparation, Expédiée, Livrée*) et impression de factures.
+- **Personnalisation du Site :** Changer le nom de la boutique, les textes d'annonces, la photo et le titre de la bannière Hero, les frais de port et coordonnées.
+- **Codes Promotionnels :** Création et suppression de codes de réduction.
 
 ---
 
-## 🏷️ Codes Promos Inclus pour Démo
-
-- `BIENVENUE10` : -10% sur toute la commande
-- `FLASH20` : -20% offre spéciale
-- `AURORA15` : -15% privilège
-- `LIVRAISON` : Livraison offerte sans minimum d'achat
-
----
-
-## 📁 Structure du Projet
+## 📁 Structure des Fichiers
 
 ```text
 boutique-ecommerce/
-├── index.html                  # Page d'accueil & application principale
+├── index.html                  # Boutique publique (Vitrine client)
+├── admin.html                  # Espace Propriétaire (Dashboard de gestion)
 ├── ouvrir_le_site.bat          # Lanceur rapide Windows
-├── README.md                   # Documentation du projet
+├── push_to_github.bat          # Script de synchronisation GitHub
+├── README.md                   # Documentation officielle
 ├── css/
-│   └── style.css               # Design System complet & animations
+│   └── style.css               # Système de design & animations
 ├── js/
-│   ├── products.js             # Données des produits & catégories
+│   ├── products.js             # Base produits par défaut
 │   ├── cart.js                 # Logique du panier & remises
-│   ├── checkout.js             # Tunnel d'achat & validation
-│   └── app.js                  # Recherche, filtres, wishlist & interactions
+│   ├── checkout.js             # Tunnel de commande & reçus
+│   ├── admin.js                # Moteur d'administration
+│   └── app.js                  # Recherche & filtres en direct
 └── assets/
     └── images/
-        └── hero_banner.jpg     # Image hero haute définition
+        └── hero_banner.jpg     # Image de la bannière Hero
 ```
 
 ---
 
-© 2026 AURORA Concept Store. Tous droits réservés.
+© 2026 AURORA Store. Tous droits réservés.

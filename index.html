@@ -3869,7 +3869,22 @@ const App = {
   wishlist: [],
   selectedProductForModal: null,
 
+  loadDynamicProducts() {
+    try {
+      const stored = localStorage.getItem('aurora_products_v2') || localStorage.getItem('aurora_products_v1');
+      if (stored) {
+        this.products = JSON.parse(stored);
+      } else {
+        this.products = typeof PRODUCTS_DATA !== 'undefined' ? [...PRODUCTS_DATA] : [];
+        localStorage.setItem('aurora_products_v2', JSON.stringify(this.products));
+      }
+    } catch(e) {
+      this.products = typeof PRODUCTS_DATA !== 'undefined' ? [...PRODUCTS_DATA] : [];
+    }
+  },
+
   init() {
+    this.loadDynamicProducts();
     this.loadWishlist();
     this.initTheme();
     this.renderCategories();
@@ -5023,6 +5038,7 @@ window.closeCartDrawer = () => App.closeCartDrawer();
 </script>
 </body>
 </html>
+
 
 
 
