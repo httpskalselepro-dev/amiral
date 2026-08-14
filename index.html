@@ -2371,6 +2371,10 @@ h1, h2, h3, h4, h5, h6 {
 
         <!-- Actions Utilisateur -->
         <div class="header-actions">
+          <!-- Bouton Espace Propriétaire / Admin -->
+          <a href="admin.html" class="header-icon-btn" title="Espace Propriétaire / Admin" style="background-color: var(--color-primary); color: var(--text-inverse);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </a>
           <!-- Toggle ThÃ¨me Sombre / Clair -->
           <button class="header-icon-btn" id="theme-toggle" title="Changer le thÃ¨me" aria-label="Changer le thÃ¨me">
             <span id="theme-icon">
@@ -2858,6 +2862,7 @@ h1, h2, h3, h4, h5, h6 {
         <div class="footer-col">
           <h4>Service Client</h4>
           <ul class="footer-links">
+            <li><a href="admin.html" style="font-weight:700; color:var(--color-accent);">⚙️ Espace Propriétaire / Gestion</a></li>
             <li><a href="javascript:void(0)" onclick="showToast('Livraison standard offerte dÃ¨s 60â‚¬ sous 48h.', 'info')">Livraison & DÃ©lais</a></li>
             <li><a href="javascript:void(0)" onclick="showToast('Retours sans frais sous 30 jours calendaires.', 'info')">Politique de Retours</a></li>
             <li><a href="javascript:void(0)" onclick="showToast('Support client joignable par email : support@aurorastore.fr', 'info')">Centre d'aide & Contact</a></li>
@@ -4956,5 +4961,6 @@ window.closeCartDrawer = () => App.closeCartDrawer();
   </script>
 </body>
 </html>
+
 
 
