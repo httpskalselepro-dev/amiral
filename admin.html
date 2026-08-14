@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURORA | Espace Propriétaire & Direction de Boutique</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       AURORA ADMIN - PREMIUM DASHBOARD DESIGN SYSTEM
+       ========================================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-sidebar: #0f172a;
+      --bg-input: #ffffff;
+      --bg-hover: #f1f5f9;
+      
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --text-sidebar: #e2e8f0;
+      
+      --color-primary: #0f172a;
+      --color-accent: #f59e0b;
+      --color-accent-dark: #d97706;
+      --color-success: #10b981;
+      --color-danger: #ef4444;
+      --color-info: #3b82f6;
+      
+      --border-light: #e2e8f0;
+      --border-subtle: #f1f5f9;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 30px rgba(0,0,0,0.1);
+      
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-body);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Layout */
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .admin-sidebar {
+      width: 280px;
+      background-color: var(--bg-sidebar);
+      color: var(--text-sidebar);
+      display: flex;
+      flex-direction: column;
+      padding: 1.8rem 1.2rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      flex-shrink: 0;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+      z-index: 50;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .brand-logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+    }
+
+    .brand-info h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-info span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .admin-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .admin-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.8rem 1.1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #94a3b8;
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .admin-nav-btn:hover {
+      background-color: rgba(255,255,255,0.06);
+      color: #ffffff;
+      transform: translateX(3px);
+    }
+
+    .admin-nav-btn.active {
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%);
+      color: #f59e0b;
+      border-left: 3px solid #f59e0b;
+      font-weight: 700;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background-color: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .admin-sidebar-footer {
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    /* Main Area */
+    .admin-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .admin-topbar {
+      height: 75px;
+      background-color: var(--bg-card);
+      border-bottom: 1px solid var(--border-light);
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .admin-topbar h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .admin-topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .store-live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: #ecfdf5;
+      color: #047857;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid #a7f3d0;
+    }
+
+    .store-live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    .admin-content {
+      padding: 2.2rem 2.5rem;
+      max-width: 1500px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .kpi-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .kpi-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+    }
+
+    .kpi-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background-color: var(--bg-body);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent-dark);
+    }
+
+    .kpi-value {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .kpi-subtext {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-success);
+    }
+
+    /* Cards & Containers */
+    .admin-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .admin-card-header {
+      padding: 1.4rem 1.8rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .admin-card-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .admin-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+
+    /* Data Tables */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .admin-table th {
+      background-color: var(--bg-body);
+      padding: 1rem 1.4rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .admin-table td {
+      padding: 1.1rem 1.4rem;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: middle;
+      font-size: 0.92rem;
+    }
+
+    .admin-table tr:hover td {
+      background-color: #f8fafc;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      background-color: #1e293b;
+      transform: translateY(-1px);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-accent:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-body);
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--border-light);
+    }
+
+    .btn-danger {
+      background-color: #fee2e2;
+      color: var(--color-danger);
+      border: 1px solid #fecaca;
+    }
+
+    .btn-danger:hover {
+      background-color: var(--color-danger);
+      color: #ffffff;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.82rem;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--text-primary);
+    }
+
+    .form-input {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 0.7rem 1rem;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--color-accent-dark);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    /* Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .st-prep { background-color: #e0f2fe; color: #0369a1; }
+    .st-shipped { background-color: #e0e7ff; color: #4338ca; }
+    .st-deliv { background-color: #d1fae5; color: #047857; }
+    .st-cancel { background-color: #fee2e2; color: #b91c1c; }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background-color: var(--bg-card);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      padding: 2.2rem;
+      position: relative;
+      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-body);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    /* Auth Screen */
+    .auth-card {
+      max-width: 440px;
+      text-align: center;
+      padding: 3rem 2.5rem;
+    }
+
+    .auth-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #0f172a, #334155);
+      color: #f59e0b;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 1.5rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .toast-msg {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      padding: 0.9rem 1.4rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      animation: slideLeft 0.3s ease;
+    }
+
+    @keyframes slideLeft {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Responsive */
+    @media(max-width: 1100px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media(max-width: 800px) {
+      .admin-layout { flex-direction: column; }
+      .admin-sidebar { width: 100%; height: auto; position: static; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
+      .admin-content { padding: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================================
+       ÉCRAN DE SÉCURITÉ & AUTHENTIFICATION PROPRIÉTAIRE
+       ========================================================================= -->
+  <div class="modal-overlay active" id="auth-overlay">
+    <div class="modal-box auth-card">
+      <div class="auth-icon">🛡️</div>
+      <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.4rem;">Direction de Boutique</h2>
+      <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">Accès sécurisé réservé au propriétaire de la boutique AURORA.</p>
+
+      <form onsubmit="event.preventDefault(); Admin.handleLogin();">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label" for="admin-pass">Mot de passe Administrateur :</label>
+          <div style="position: relative;">
+            <input type="password" id="admin-pass" class="form-input" placeholder="Entrez le mot de passe" required autocomplete="current-password" autofocus />
+            <button type="button" onclick="Admin.togglePassVisibility()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); border: none; background: none; color: var(--text-muted); cursor: pointer;" title="Afficher/Masquer">
+              👁️
+            </button>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Mot de passe officiel : <strong>bounapenda</strong></span>
+            <button type="button" onclick="Admin.fillDefaultPass()" style="font-size: 0.78rem; color: var(--color-accent-dark); font-weight: 700; background: none; border: none; text-decoration: underline;">Remplir</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-accent" style="width: 100%; padding: 0.85rem; font-size: 1rem; margin-top: 1rem; margin-bottom: 0.8rem;">
+          Accéder à mon Espace Propriétaire
+        </button>
+
+        <a href="index.html" class="btn btn-secondary" style="width: 100%; font-size: 0.88rem;">
+          ← Retourner vers la boutique client
+        </a>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       APPLICATION ADMIN PRINCIPALE
+       ========================================================================= -->
+  <div class="admin-layout" id="admin-app" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <div class="brand-logo-icon">A</div>
+        <div class="brand-info">
+          <h2 id="sidebar-store-name">AURORA Store</h2>
+          <span>Espace Direction</span>
+        </div>
+      </div>
+
+      <nav class="admin-nav-list">
+        <button class="admin-nav-btn active" data-view="dashboard" onclick="Admin.navigate('dashboard', this)">
+          <span>📊</span>
+          <span>Vue d'ensemble</span>
+        </button>
+
+        <button class="admin-nav-btn" data-view="products" onclick="Admin.navigate('products', this)">
+          <span>📦</span>
+          <span>Catalogue & Produits</span>
+          <span class="nav-badge" id="badge-products-count">12</span>
+        </button>
+
+        <button class="admin-nav-btn" data-view="orders" onclick="Admin.navigate('orders', this)">
+          <span>📑</span>
+          <span>Commandes Clients</span>
+          <span class="nav-badge" id="badge-orders-count">0</span>
+        </button>
+
+        <button class="admin-nav-btn" data-view="settings" onclick="Admin.navigate('settings', this)">
+          <span>🎨</span>
+          <span>Personnaliser le Site</span>
+        </button>
+
+        <button class="admin-nav-btn" data-view="coupons" onclick="Admin.navigate('coupons', this)">
+          <span>🏷️</span>
+          <span>Codes Promotionnels</span>
+        </button>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <a href="index.html" target="_blank" class="btn btn-secondary btn-sm" style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.12);">
+          <span>🌐</span> Voir la Boutique en direct
+        </a>
+        <button class="btn btn-danger btn-sm" onclick="Admin.logout()">
+          <span>🔒</span> Déconnexion
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <h1 id="topbar-title">Tableau de Bord & Ventes</h1>
+        <div class="admin-topbar-actions">
+          <div class="store-live-pill">
+            <span class="store-live-dot"></span>
+            <span>Boutique en ligne & Synchronisée</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="admin-content">
+
+        <!-- ==========================================
+             1. VUE TABLEAU DE BORD (DASHBOARD)
+             ========================================== -->
+        <section id="view-dashboard">
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Chiffre d'Affaires</span>
+                <div class="kpi-icon">💰</div>
+              </div>
+              <div class="kpi-value" id="kpi-revenue">0.00 €</div>
+              <div class="kpi-subtext">↗ Total des encaissements</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Commandes Validées</span>
+                <div class="kpi-icon">📦</div>
+              </div>
+              <div class="kpi-value" id="kpi-orders">0</div>
+              <div class="kpi-subtext">Commandes à traiter</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Panier Moyen</span>
+                <div class="kpi-icon">🛒</div>
+              </div>
+              <div class="kpi-value" id="kpi-avg">0.00 €</div>
+              <div class="kpi-subtext">Par client</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Articles au Catalogue</span>
+                <div class="kpi-icon">🏷️</div>
+              </div>
+              <div class="kpi-value" id="kpi-prods-count">12</div>
+              <div class="kpi-subtext" id="kpi-low-stock" style="color: var(--color-accent-dark);">Vérification des stocks</div>
+            </div>
+          </div>
+
+          <!-- Dernières Commandes -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Dernières Commandes Clients</h3>
+                <p class="admin-card-desc">Suivez les achats passés sur la boutique en temps réel.</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="Admin.navigate('orders', document.querySelectorAll('.admin-nav-btn')[2])">
+                Voir toutes les commandes →
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Réf. Commande</th>
+                    <th>Client</th>
+                    <th>Date</th>
+                    <th>Montant Payé</th>
+                    <th>Statut</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboard-orders-rows"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             2. VUE GESTION DES PRODUITS & DÉTAILS
+             ========================================== -->
+        <section id="view-products" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Catalogue des Produits & Articles</h3>
+                <p class="admin-card-desc">Ajoutez de nouveaux produits, modifiez les fiches détaillées, ajustez les prix et les stocks.</p>
+              </div>
+              <button class="btn btn-accent" onclick="Admin.openProductModal()">
+                <span>+</span> Ajouter un Nouveau Produit
+              </button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Produit</th>
+                    <th>Catégorie</th>
+                    <th>Prix (€)</th>
+                    <th>Stock Actuel</th>
+                    <th>Badge</th>
+                    <th>Actions & Détails</th>
+                  </tr>
+                </thead>
+                <tbody id="products-table-rows"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             3. VUE SUIVI DES COMMANDES
+             ========================================== -->
+        <section id="view-orders" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Gestion des Commandes Clients</h3>
+                <p class="admin-card-desc">Mettez à jour le statut d'expédition de chaque commande et imprimez les reçus.</p>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Réf. Commande</th>
+                    <th>Client & Contact</th>
+                    <th>Articles Achetés</th>
+                    <th>Total Payé</th>
+                    <th>Statut Logistique</th>
+                    <th>Facture</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-table-rows"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             4. VUE PERSONNALISATION DU SITE (PARAMÈTRES)
+             ========================================== -->
+        <section id="view-settings" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Personnalisation Complète du Site</h3>
+                <p class="admin-card-desc">Modifiez les textes, la bannière Hero, les frais de port et les informations de contact de votre boutique en direct.</p>
+              </div>
+            </div>
+
+            <form onsubmit="event.preventDefault(); Admin.saveStoreSettings();" style="padding: 2rem;">
+              <h4 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 1rem; color: var(--color-accent-dark);">1. Identité & Bannière d'Annonces</h4>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="cfg-store-name">Nom de la Boutique :</label>
+                  <input type="text" id="cfg-store-name" class="form-input" required value="AURORA" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="cfg-announcement">Texte du bandeau d'annonce en haut :</label>
+                  <input type="text" id="cfg-announcement" class="form-input" required value="✨ Offre de Bienvenue : -10% avec le code BIENVENUE10 • Livraison offerte dès 60€ d'achat !" />
+                </div>
+              </div>
+
+              <h4 style="font-size: 1.05rem; font-weight: 800; margin: 1.5rem 0 1rem; color: var(--color-accent-dark);">2. Bannière Principale (Hero)</h4>
+              <div class="form-group">
+                <label class="form-label" for="cfg-hero-title">Grand Titre de la bannière Hero :</label>
+                <input type="text" id="cfg-hero-title" class="form-input" required value="L'harmonie entre technologie et design épuré." />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cfg-hero-subtitle">Sous-titre explicatif :</label>
+                <textarea id="cfg-hero-subtitle" class="form-input" rows="2" required>Une sélection exclusive d'objets du quotidien conçus pour enrichir votre espace de vie et votre expérience sonore.</textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cfg-hero-image">URL de l'image de fond du Hero :</label>
+                <input type="url" id="cfg-hero-image" class="form-input" required value="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=80" />
+              </div>
+
+              <h4 style="font-size: 1.05rem; font-weight: 800; margin: 1.5rem 0 1rem; color: var(--color-accent-dark);">3. Livraison & Coordonnées Propriétaire</h4>
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label class="form-label" for="cfg-free-shipping">Seuil Livraison Offerte (€) :</label>
+                  <input type="number" id="cfg-free-shipping" class="form-input" required value="60" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="cfg-shipping-fee">Frais de Port Standards (€) :</label>
+                  <input type="number" step="0.10" id="cfg-shipping-fee" class="form-input" required value="4.90" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="cfg-contact-email">Email de Support Client :</label>
+                  <input type="email" id="cfg-contact-email" class="form-input" required value="contact@aurorastore.fr" />
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                <button type="submit" class="btn btn-accent" style="padding: 0.8rem 1.8rem;">
+                  💾 Enregistrer les Modifications du Site
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             5. VUE CODES PROMOS
+             ========================================== -->
+        <section id="view-coupons" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Codes Promotionnels</h3>
+                <p class="admin-card-desc">Gérez vos codes de réduction pour vos opérations marketing.</p>
+              </div>
+              <button class="btn btn-accent" onclick="Admin.openCouponPrompt()">
+                + Nouveau Code Promo
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Code Promo</th>
+                    <th>Type</th>
+                    <th>Valeur Remise</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="coupons-table-rows"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- =========================================================================
+       MODALE ÉDITION / AJOUT DE PRODUIT (DÉTAILS COMPLETS)
+       ========================================================================= -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="Admin.closeModal('product-modal')">&times;</button>
+      <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 1.5rem;" id="modal-product-title">Ajouter un Nouveau Produit</h3>
+
+      <form onsubmit="event.preventDefault(); Admin.saveProduct();">
+        <input type="hidden" id="edit-product-id" value="" />
+
+        <div class="form-group">
+          <label class="form-label" for="p-name">Nom du Produit *</label>
+          <input type="text" id="p-name" class="form-input" required placeholder="Ex: Casque Audio Spatial sans Fil" />
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-cat">Catégorie *</label>
+            <select id="p-cat" class="form-input" required>
+              <option value="tech">Tech & Audio</option>
+              <option value="maison">Maison & Décoration</option>
+              <option value="accessoires">Mode & Accessoires</option>
+              <option value="bien-etre">Bien-être & Quotidien</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="p-price">Prix de Vente TTC (€) *</label>
+            <input type="number" step="0.01" id="p-price" class="form-input" required placeholder="149.00" />
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-stock">Quantité en Stock *</label>
+            <input type="number" id="p-stock" class="form-input" required placeholder="20" min="0" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="p-badge">Badge promo / mise en avant</label>
+            <input type="text" id="p-badge" class="form-input" placeholder="Ex: -20% ou Nouveau ou Bestseller" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="p-img">URL de l'image principale *</label>
+          <input type="url" id="p-img" class="form-input" required placeholder="https://images.unsplash.com/..." value="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="p-desc">Description courte *</label>
+          <input type="text" id="p-desc" class="form-input" required placeholder="Phrase d'accroche pour la fiche produit..." />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="p-longdesc">Description détaillée & Caractéristiques</label>
+          <textarea id="p-longdesc" class="form-input" rows="3" placeholder="Présentation complète du produit..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="p-specs">Spécifications techniques (Format: Libellé: Valeur, séparées par des virgules)</label>
+          <input type="text" id="p-specs" class="form-input" placeholder="Autonomie: 40h, Connectivité: Bluetooth 5.3, Poids: 240g" />
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1.8rem;">
+          <button type="button" class="btn btn-secondary" onclick="Admin.closeModal('product-modal')">Annuler</button>
+          <button type="submit" class="btn btn-accent">Enregistrer le Produit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Conteneur Toasts -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- =========================================================================
+       MOTEUR JAVASCRIPT DU DASHBOARD PROPRIÉTAIRE
+       ========================================================================= -->
+  <script>
+    // Mot de passe propriétaire officiel demandé : bounapenda
+    const MASTER_PASSWORD = "bounapenda";
+
+    // Données initiales par défaut si première visite
+    const INITIAL_CONFIG = {
+      storeName: "AURORA",
+      announcementText: "✨ Offre de Bienvenue : -10% avec le code BIENVENUE10 • Livraison offerte dès 60€ d'achat !",
+      heroTitle: "L'harmonie entre technologie et design épuré.",
+      heroSubtitle: "Une sélection exclusive d'objets du quotidien conçus pour enrichir votre espace de vie et votre expérience sonore.",
+      heroImage: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=80",
+      freeShippingThreshold: 60.00,
+      standardShippingFee: 4.90,
+      contactEmail: "contact@aurorastore.fr"
+    };
+
+    const INITIAL_PRODUCTS = [
+      { id: 1, name: "Casque Audio Spatial Sans Fil « Aura Max »", category: "tech", categoryLabel: "Tech & Audio", price: 199.99, originalPrice: 249.99, badge: { text: "-20%", type: "discount" }, rating: 4.9, reviewsCount: 128, stock: 8, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80", shortDesc: "Réduction de bruit active adaptative hybride et autonomie de 40 heures.", description: "Conçu pour les audiophiles exigeants avec transducteurs dynamiques en titane de 40 mm.", specs: [{label:"Autonomie", value:"40h"}, {label:"Connectivité", value:"Bluetooth 5.3"}] },
+      { id: 2, name: "Enceinte Sculptée en Bois Brut « Sonora »", category: "tech", categoryLabel: "Tech & Audio", price: 149.00, originalPrice: null, badge: { text: "Nouveau", type: "new" }, rating: 4.8, reviewsCount: 94, stock: 14, image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=800&q=80", shortDesc: "Coffrage acoustique en noyer massif certifié FSC.", description: "Sonorité chaleureuse et naturelle.", specs: [{label:"Puissance", value:"45W RMS"}, {label:"Autonomie", value:"24h"}] },
+      { id: 3, name: "Lampe d'Ambiance en Lévitation « Lumina »", category: "maison", categoryLabel: "Maison & Décoration", price: 89.90, originalPrice: 119.00, badge: { text: "-25%", type: "discount" }, rating: 4.7, reviewsCount: 76, stock: 5, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80", shortDesc: "Ampoule LED flottant par sustentation magnétique.", description: "Éclairage par induction et rotation perpétuelle.", specs: [{label:"Technologie", value:"Lévitation magnétique"}] },
+      { id: 4, name: "Diffuseur Ultrasonique Céramique « Zenith »", category: "bien-etre", categoryLabel: "Bien-être & Quotidien", price: 49.90, originalPrice: null, badge: { text: "Éco-Conçu", type: "eco" }, rating: 4.9, reviewsCount: 210, stock: 22, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=800&q=80", shortDesc: "Vaporisation à froid ultra-silencieuse.", description: "Purifie l'atmosphère et diffuse vos huiles essentielles préférées.", specs: [{label:"Capacité", value:"250 ml"}] },
+      { id: 5, name: "Montre Automatique « Chronos Minimal »", category: "accessoires", categoryLabel: "Mode & Accessoires", price: 289.00, originalPrice: 349.00, badge: { text: "Édition Limitée", type: "premium" }, rating: 4.95, reviewsCount: 64, stock: 3, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80", shortDesc: "Mouvement mécanique automatique 24 rubis, verre saphir.", description: "Élégance intemporelle et calibre haute précision.", specs: [{label:"Verre", value:"Cristal de Saphir"}] },
+      { id: 6, name: "Sac à Dos Urbain « Nordic Pack »", category: "accessoires", categoryLabel: "Mode & Accessoires", price: 119.00, originalPrice: null, badge: { text: "Bestseller", type: "bestseller" }, rating: 4.85, reviewsCount: 182, stock: 17, image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80", shortDesc: "Toile déperlante Cordura®, compartiment PC 16 pouces.", description: "Le compagnon idéal de vos trajets quotidiens et voyages.", specs: [{label:"Volume", value:"25 Litres"}] }
+    ];
+
+    const INITIAL_COUPONS = {
+      "BIENVENUE10": { type: "percent", value: 10, label: "-10% de bienvenue" },
+      "FLASH20": { type: "percent", value: 20, label: "-20% offre flash" },
+      "AURORA15": { type: "percent", value: 15, label: "-15% privilège" },
+      "LIVRAISON": { type: "shipping", value: 0, label: "Livraison offerte" }
+    };
+
+    const Admin = {
+      products: [],
+      orders: [],
+      coupons: {},
+      config: {},
+
+      init() {
+        this.loadAllData();
+        // Vérifier si déjà authentifié dans cette session
+        if (sessionStorage.getItem("aurora_owner_logged") === "true") {
+          this.unlockDashboard();
+        }
+      },
+
+      // Authentification
+      handleLogin() {
+        const pass = document.getElementById("admin-pass")?.value.trim();
+        if (pass === MASTER_PASSWORD) {
+          sessionStorage.setItem("aurora_owner_logged", "true");
+          this.unlockDashboard();
+          this.toast("🎉 Bienvenue dans votre Espace Propriétaire !", "success");
+        } else {
+          this.toast("❌ Mot de passe incorrect. (Indice : bounapenda)", "danger");
+        }
+      },
+
+      fillDefaultPass() {
+        const p = document.getElementById("admin-pass");
+        if (p) p.value = MASTER_PASSWORD;
+      },
+
+      togglePassVisibility() {
+        const p = document.getElementById("admin-pass");
+        if (p) p.type = p.type === "password" ? "text" : "password";
+      },
+
+      unlockDashboard() {
+        document.getElementById("auth-overlay").classList.remove("active");
+        document.getElementById("admin-app").style.display = "flex";
+        this.renderDashboard();
+        this.renderProductsTable();
+        this.renderOrdersTable();
+        this.renderCouponsTable();
+        this.fillSettingsForm();
+      },
+
+      logout() {
+        sessionStorage.removeItem("aurora_owner_logged");
+        document.getElementById("auth-overlay").classList.add("active");
+        document.getElementById("admin-app").style.display = "none";
+        this.toast("Déconnexion effectuée avec succès.", "info");
+      },
+
+      // Chargement des données synchronisées
+      loadAllData() {
+        // Configuration
+        try {
+          const cfg = localStorage.getItem("aurora_store_config_v2");
+          this.config = cfg ? JSON.parse(cfg) : { ...INITIAL_CONFIG };
+        } catch(e) { this.config = { ...INITIAL_CONFIG }; }
+
+        // Produits
+        try {
+          const p = localStorage.getItem("aurora_products_v2");
+          this.products = p ? JSON.parse(p) : [...INITIAL_PRODUCTS];
+        } catch(e) { this.products = [...INITIAL_PRODUCTS]; }
+
+        // Commandes
+        try {
+          const o = localStorage.getItem("aurora_orders_v2") || localStorage.getItem("aurora_orders_history");
+          this.orders = o ? JSON.parse(o) : [
+            { orderNumber: "AUR-892410", date: "14 août 2026, 01:15", customer: { firstName: "Claire", lastName: "Moreau", email: "claire.moreau@email.com", city: "Lyon" }, totals: { total: 199.99 }, status: "Expédiée", items: [{ name: "Casque Audio Spatial « Aura Max »", quantity: 1 }] },
+            { orderNumber: "AUR-651290", date: "13 août 2026, 18:40", customer: { firstName: "Thomas", lastName: "Dubois", email: "thomas.d@email.com", city: "Bordeaux" }, totals: { total: 149.00 }, status: "En préparation", items: [{ name: "Enceinte Sculptée en Bois « Sonora »", quantity: 1 }] }
+          ];
+        } catch(e) { this.orders = []; }
+
+        // Coupons
+        try {
+          const c = localStorage.getItem("aurora_coupons_v2");
+          this.coupons = c ? JSON.parse(c) : { ...INITIAL_COUPONS };
+        } catch(e) { this.coupons = { ...INITIAL_COUPONS }; }
+
+        // Mettre à jour le nom dans la sidebar
+        const sbName = document.getElementById("sidebar-store-name");
+        if (sbName) sbName.textContent = this.config.storeName || "AURORA Store";
+      },
+
+      saveProducts() {
+        localStorage.setItem("aurora_products_v2", JSON.stringify(this.products));
+        localStorage.setItem("aurora_products_v1", JSON.stringify(this.products)); // Rétro-compatibilité
+        this.renderDashboard();
+        this.renderProductsTable();
+      },
+
+      saveOrders() {
+        localStorage.setItem("aurora_orders_v2", JSON.stringify(this.orders));
+        localStorage.setItem("aurora_orders_history", JSON.stringify(this.orders));
+        this.renderDashboard();
+        this.renderOrdersTable();
+      },
+
+      saveCoupons() {
+        localStorage.setItem("aurora_coupons_v2", JSON.stringify(this.coupons));
+        this.renderCouponsTable();
+      },
+
+      // Navigation interne
+      navigate(viewId, btn) {
+        document.querySelectorAll(".admin-nav-btn").forEach(b => b.classList.remove("active"));
+        if (btn) btn.classList.add("active");
+
+        const views = ["dashboard", "products", "orders", "settings", "coupons"];
+        views.forEach(v => {
+          const el = document.getElementById(`view-${v}`);
+          if (el) el.style.display = v === viewId ? "block" : "none";
+        });
+
+        const titles = {
+          dashboard: "Tableau de Bord & Ventes",
+          products: "Catalogue des Produits & Détails",
+          orders: "Suivi des Commandes Clients",
+          settings: "Personnalisation & Paramètres de la Boutique",
+          coupons: "Gestion des Codes Promotionnels"
+        };
+        const titleEl = document.getElementById("topbar-title");
+        if (titleEl) titleEl.textContent = titles[viewId] || "Administration";
+      },
+
+      // Rendu Dashboard
+      renderDashboard() {
+        const totalRev = this.orders.reduce((sum, o) => sum + (o.totals?.total || 0), 0);
+        const orderCount = this.orders.length;
+        const avgCart = orderCount > 0 ? totalRev / orderCount : 0;
+        const lowStock = this.products.filter(p => p.stock <= 5).length;
+
+        document.getElementById("kpi-revenue").textContent = `${totalRev.toFixed(2)} €`;
+        document.getElementById("kpi-orders").textContent = orderCount;
+        document.getElementById("kpi-avg").textContent = `${avgCart.toFixed(2)} €`;
+        document.getElementById("kpi-prods-count").textContent = this.products.length;
+        document.getElementById("kpi-low-stock").textContent = `${lowStock} article(s) en stock critique (≤5)`;
+
+        document.getElementById("badge-products-count").textContent = this.products.length;
+        document.getElementById("badge-orders-count").textContent = orderCount;
+
+        const tbody = document.getElementById("dashboard-orders-rows");
+        if (tbody) {
+          tbody.innerHTML = this.orders.slice(0, 5).map(o => `
+            <tr>
+              <td><strong>${o.orderNumber}</strong></td>
+              <td>${o.customer?.firstName} ${o.customer?.lastName}</td>
+              <td>${o.date}</td>
+              <td><strong>${o.totals?.total?.toFixed(2)} €</strong></td>
+              <td><span class="status-badge ${this.getStatusClass(o.status)}">${o.status || 'En préparation'}</span></td>
+            </tr>
+          `).join("");
+        }
+      },
+
+      getStatusClass(st) {
+        if (st === "Expédiée") return "st-shipped";
+        if (st === "Livrée") return "st-deliv";
+        if (st === "Annulée") return "st-cancel";
+        return "st-prep";
+      },
+
+      // Rendu Produits
+      renderProductsTable() {
+        const tbody = document.getElementById("products-table-rows");
+        if (!tbody) return;
+
+        tbody.innerHTML = this.products.map(p => `
+          <tr>
+            <td>
+              <div style="display:flex; align-items:center; gap:0.8rem;">
+                <img src="${p.image}" style="width:42px; height:42px; border-radius:8px; object-fit:cover; background:#f1f5f9;" />
+                <div>
+                  <strong>${p.name}</strong>
+                  <div style="font-size:0.75rem; color:#64748b;">Réf #${p.id}</div>
+                </div>
+              </div>
+            </td>
+            <td><span style="background:#f1f5f9; padding:0.25rem 0.6rem; border-radius:6px; font-size:0.8rem; font-weight:700;">${p.categoryLabel || p.category}</span></td>
+            <td>
+              <input type="number" step="0.01" value="${p.price.toFixed(2)}" class="form-input" style="width:90px; padding:0.35rem 0.5rem;" onchange="Admin.quickEditPrice(${p.id}, this.value)" />
+            </td>
+            <td>
+              <input type="number" value="${p.stock}" class="form-input" style="width:75px; padding:0.35rem 0.5rem; ${p.stock <= 5 ? 'color:#ef4444; font-weight:800; border-color:#fca5a5;' : ''}" onchange="Admin.quickEditStock(${p.id}, this.value)" />
+            </td>
+            <td>${p.badge ? `<span style="font-size:0.75rem; font-weight:800; background:#fef3c7; color:#b45309; padding:0.2rem 0.5rem; border-radius:4px;">${p.badge.text || p.badge}</span>` : '<span style="color:#cbd5e1;">-</span>'}</td>
+            <td>
+              <div style="display:flex; gap:0.4rem;">
+                <button class="btn btn-secondary btn-sm" onclick="Admin.openEditProductModal(${p.id})" title="Modifier tous les détails">
+                  ✏️ Modifier
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="Admin.deleteProduct(${p.id})" title="Supprimer">
+                  🗑️
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join("");
+      },
+
+      quickEditPrice(id, val) {
+        const p = this.products.find(x => x.id === id);
+        if (p) {
+          p.price = parseFloat(val) || p.price;
+          this.saveProducts();
+          this.toast(`Prix de « ${p.name} » mis à jour (${p.price.toFixed(2)} €)`, "success");
+        }
+      },
+
+      quickEditStock(id, val) {
+        const p = this.products.find(x => x.id === id);
+        if (p) {
+          p.stock = parseInt(val, 10) || 0;
+          this.saveProducts();
+          this.toast(`Stock de « ${p.name} » mis à jour (${p.stock} unités)`, "success");
+        }
+      },
+
+      deleteProduct(id) {
+        const p = this.products.find(x => x.id === id);
+        if (confirm(`Voulez-vous vraiment supprimer définitivement « ${p ? p.name : 'cet article'} » de la boutique ?`)) {
+          this.products = this.products.filter(x => x.id !== id);
+          this.saveProducts();
+          this.toast("Article supprimé de la boutique.", "info");
+        }
+      },
+
+      openProductModal() {
+        document.getElementById("modal-product-title").textContent = "Ajouter un Nouveau Produit";
+        document.getElementById("edit-product-id").value = "";
+        document.getElementById("p-name").value = "";
+        document.getElementById("p-cat").value = "tech";
+        document.getElementById("p-price").value = "";
+        document.getElementById("p-stock").value = "15";
+        document.getElementById("p-badge").value = "Nouveau";
+        document.getElementById("p-img").value = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80";
+        document.getElementById("p-desc").value = "";
+        document.getElementById("p-longdesc").value = "";
+        document.getElementById("p-specs").value = "Autonomie: 40h, Connectivité: Bluetooth 5.3";
+        this.openModal("product-modal");
+      },
+
+      openEditProductModal(id) {
+        const p = this.products.find(x => x.id === id);
+        if (!p) return;
+
+        document.getElementById("modal-product-title").textContent = `Modifier : ${p.name}`;
+        document.getElementById("edit-product-id").value = p.id;
+        document.getElementById("p-name").value = p.name || "";
+        document.getElementById("p-cat").value = p.category || "tech";
+        document.getElementById("p-price").value = p.price || "";
+        document.getElementById("p-stock").value = p.stock || 0;
+        document.getElementById("p-badge").value = p.badge?.text || p.badge || "";
+        document.getElementById("p-img").value = p.image || "";
+        document.getElementById("p-desc").value = p.shortDesc || "";
+        document.getElementById("p-longdesc").value = p.description || "";
+        
+        // Specs text format
+        const specsText = p.specs ? p.specs.map(s => `${s.label}: ${s.value}`).join(", ") : "";
+        document.getElementById("p-specs").value = specsText;
+
+        this.openModal("product-modal");
+      },
+
+      saveProduct() {
+        const editId = document.getElementById("edit-product-id").value;
+        const name = document.getElementById("p-name").value.trim();
+        const cat = document.getElementById("p-cat").value;
+        const price = parseFloat(document.getElementById("p-price").value);
+        const stock = parseInt(document.getElementById("p-stock").value, 10);
+        const badgeText = document.getElementById("p-badge").value.trim();
+        const img = document.getElementById("p-img").value.trim();
+        const desc = document.getElementById("p-desc").value.trim();
+        const longdesc = document.getElementById("p-longdesc").value.trim();
+        const rawSpecs = document.getElementById("p-specs").value.trim();
+
+        // Parser les spécifications
+        const specsArray = rawSpecs ? rawSpecs.split(",").map(item => {
+          const parts = item.split(":");
+          return { label: parts[0]?.trim() || "Détail", value: parts[1]?.trim() || "" };
+        }) : [{ label: "Origine", value: "Collection Officielle AURORA" }];
+
+        const catLabels = {
+          tech: "Tech & Audio",
+          maison: "Maison & Décoration",
+          accessoires: "Mode & Accessoires",
+          "bien-etre": "Bien-être & Quotidien"
+        };
+
+        if (editId) {
+          // Modification
+          const p = this.products.find(x => x.id === parseInt(editId, 10));
+          if (p) {
+            p.name = name;
+            p.category = cat;
+            p.categoryLabel = catLabels[cat] || "Général";
+            p.price = price;
+            p.stock = stock;
+            p.badge = badgeText ? { text: badgeText, type: "highlight" } : null;
+            p.image = img;
+            p.shortDesc = desc;
+            p.description = longdesc || desc;
+            p.specs = specsArray;
+            this.toast(`Produit « ${name} » modifié avec succès !`, "success");
+          }
+        } else {
+          // Création
+          const newProd = {
+            id: Date.now(),
+            name,
+            slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+            category: cat,
+            categoryLabel: catLabels[cat] || "Général",
+            price,
+            originalPrice: null,
+            badge: badgeText ? { text: badgeText, type: "new" } : null,
+            rating: 5.0,
+            reviewsCount: 1,
+            stock,
+            image: img,
+            gallery: [img],
+            colors: [{ name: "Standard", hex: "#1c1c1e", img: img }],
+            shortDesc: desc,
+            description: longdesc || desc,
+            specs: specsArray
+          };
+          this.products.unshift(newProd);
+          this.toast(`Nouveau produit « ${name} » ajouté au catalogue !`, "success");
+        }
+
+        this.saveProducts();
+        this.closeModal("product-modal");
+      },
+
+      // Rendu Commandes
+      renderOrdersTable() {
+        const tbody = document.getElementById("orders-table-rows");
+        if (!tbody) return;
+
+        if (this.orders.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted);">Aucune commande pour le moment.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = this.orders.map((o, idx) => `
+          <tr>
+            <td><strong>${o.orderNumber}</strong><br><span style="font-size:0.75rem; color:#64748b;">${o.date}</span></td>
+            <td>
+              <strong>${o.customer?.firstName} ${o.customer?.lastName}</strong><br>
+              <span style="font-size:0.8rem; color:#64748b;">${o.customer?.email}</span><br>
+              <span style="font-size:0.75rem; color:#94a3b8;">${o.customer?.address || ''} ${o.customer?.city || ''}</span>
+            </td>
+            <td>${o.items?.map(i => `${i.quantity}x ${i.name}`).join("<br>") || '1 article'}</td>
+            <td><strong>${o.totals?.total?.toFixed(2)} €</strong></td>
+            <td>
+              <select class="form-input" style="padding:0.35rem 0.6rem; font-weight:700;" onchange="Admin.updateOrderStatus(${idx}, this.value)">
+                <option value="En attente" ${o.status === 'En attente' ? 'selected' : ''}>🟡 En attente</option>
+                <option value="En préparation" ${o.status === 'En préparation' ? 'selected' : ''}>🔵 En préparation</option>
+                <option value="Expédiée" ${o.status === 'Expédiée' ? 'selected' : ''}>🟣 Expédiée</option>
+                <option value="Livrée" ${o.status === 'Livrée' ? 'selected' : ''}>🟢 Livrée</option>
+                <option value="Annulée" ${o.status === 'Annulée' ? 'selected' : ''}>🔴 Annulée</option>
+              </select>
+            </td>
+            <td>
+              <button class="btn btn-secondary btn-sm" onclick="window.print()" title="Imprimer le bon">🖨️ Reçu</button>
+            </td>
+          </tr>
+        `).join("");
+      },
+
+      updateOrderStatus(idx, st) {
+        if (this.orders[idx]) {
+          this.orders[idx].status = st;
+          this.saveOrders();
+          this.toast(`Statut de la commande #${this.orders[idx].orderNumber} mis à jour : « ${st} »`, "success");
+        }
+      },
+
+      // Configuration du Site
+      fillSettingsForm() {
+        document.getElementById("cfg-store-name").value = this.config.storeName || "AURORA";
+        document.getElementById("cfg-announcement").value = this.config.announcementText || "";
+        document.getElementById("cfg-hero-title").value = this.config.heroTitle || "";
+        document.getElementById("cfg-hero-subtitle").value = this.config.heroSubtitle || "";
+        document.getElementById("cfg-hero-image").value = this.config.heroImage || "";
+        document.getElementById("cfg-free-shipping").value = this.config.freeShippingThreshold || 60;
+        document.getElementById("cfg-shipping-fee").value = this.config.standardShippingFee || 4.90;
+        document.getElementById("cfg-contact-email").value = this.config.contactEmail || "contact@aurorastore.fr";
+      },
+
+      saveStoreSettings() {
+        this.config = {
+          storeName: document.getElementById("cfg-store-name").value.trim(),
+          announcementText: document.getElementById("cfg-announcement").value.trim(),
+          heroTitle: document.getElementById("cfg-hero-title").value.trim(),
+          heroSubtitle: document.getElementById("cfg-hero-subtitle").value.trim(),
+          heroImage: document.getElementById("cfg-hero-image").value.trim(),
+          freeShippingThreshold: parseFloat(document.getElementById("cfg-free-shipping").value) || 60,
+          standardShippingFee: parseFloat(document.getElementById("cfg-shipping-fee").value) || 4.90,
+          contactEmail: document.getElementById("cfg-contact-email").value.trim()
+        };
+
+        localStorage.setItem("aurora_store_config_v2", JSON.stringify(this.config));
+        document.getElementById("sidebar-store-name").textContent = this.config.storeName;
+        this.toast("✨ Modifications du site enregistrées et appliquées en direct !", "success");
+      },
+
+      // Codes Promos
+      renderCouponsTable() {
+        const tbody = document.getElementById("coupons-table-rows");
+        if (!tbody) return;
+
+        tbody.innerHTML = Object.entries(this.coupons).map(([code, c]) => `
+          <tr>
+            <td><strong>🏷️ ${code}</strong></td>
+            <td>${c.type === 'percent' ? 'Pourcentage' : c.type === 'fixed' ? 'Montant fixe' : 'Frais de port'}</td>
+            <td><strong>${c.type === 'percent' ? `-${c.value}%` : c.type === 'fixed' ? `-${c.value} €` : 'Offerte'}</strong></td>
+            <td>${c.label}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" onclick="Admin.deleteCoupon('${code}')">Supprimer</button>
+            </td>
+          </tr>
+        `).join("");
+      },
+
+      openCouponPrompt() {
+        const code = prompt("Nom du code promo (ex: SOLDES25) :");
+        if (!code) return;
+        const val = parseInt(prompt("Valeur de la réduction en % (ex: 25) :", "25"), 10);
+        if (isNaN(val) || val <= 0) return;
+
+        const up = code.trim().toUpperCase();
+        this.coupons[up] = { type: "percent", value: val, label: `-${val}% réduction spéciale` };
+        this.saveCoupons();
+        this.toast(`Code promo « ${up} » activé avec succès !`, "success");
+      },
+
+      deleteCoupon(code) {
+        if (confirm(`Supprimer le code promo « ${code} » ?`)) {
+          delete this.coupons[code];
+          this.saveCoupons();
+          this.toast("Code promo supprimé.", "info");
+        }
+      },
+
+      // Helpers
+      openModal(id) { document.getElementById(id).classList.add("active"); },
+      closeModal(id) { document.getElementById(id).classList.remove("active"); },
+
+      toast(msg, type = "info") {
+        const container = document.getElementById("toast-container");
+        if (!container) return;
+        const t = document.createElement("div");
+        t.className = "toast-msg";
+        t.innerHTML = `<span>${type === 'success' ? '✅' : type === 'danger' ? '⚠️' : 'ℹ️'}</span><span>${msg}</span>`;
+        container.appendChild(t);
+        setTimeout(() => t.remove(), 3500);
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", () => Admin.init());
+  </script>
+</body>
+</html>
